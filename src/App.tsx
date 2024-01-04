@@ -1,13 +1,13 @@
-import React from "react";
-import Counter from "./components/Counter";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import Posts from "./components/posts";
+import "./i18";
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <Counter />
+        <Posts />
       </div>
     </Provider>
   );
