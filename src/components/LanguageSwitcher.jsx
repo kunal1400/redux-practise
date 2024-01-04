@@ -7,9 +7,9 @@ export const LanguageSwitcher = () => {
     };
     return (
         <select onChange={changeLanguage}>
-            <option value="en" selected={i18n.resolvedLanguage === "en"}>English</option>
-            <option value="fr" selected={i18n.resolvedLanguage === "fr"}>French</option>
-            <option value="de" selected={i18n.resolvedLanguage === "de"}>German</option>
+            <option key="en" value="en" selected={i18n.resolvedLanguage === "en"}>English</option>
+            <option key="fr" value="fr" selected={i18n.resolvedLanguage === "fr"}>French</option>
+            <option key="de" value="de" selected={i18n.resolvedLanguage === "de"}>German</option>
         </select>
     );
 }
