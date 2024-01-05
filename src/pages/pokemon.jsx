@@ -1,28 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigation } from "../components/Navigation";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { fetchPokemons } from "../redux/pokemonSlice";
 import { Grid } from "../components/Grid/Grid";
+import { useGetPokemonsQuery } from "../redux/api";
 
 export default function PokemonPage() {
-    const {totalCount, next, previous, pokemons, status} = useAppSelector(state => state.pokemons);
-    const dispatch = useAppDispatch();
+    const [offset, setOffset] = useState(0);
+    const {data, isError, isLoading, isFetching, isSuccess} = useGetPokemonsQuery(offset);
 
-    useEffect(() => {
-        if(pokemons.length === 0) {
-            dispatch(fetchPokemons());
-        }
-    }, []);
+    if(isLoading || isFetching) return <p>Loading...</p>;
+
+    const {count: totalCount, results: pokemons, previous, next} = data;
+
+    const handlePagination = (url) => {
+        console.log(url);
+        const offset = new URL(url).searchParams.get("offset");
+        setOffset(offset);
+    }
 
     return <div style={{maxWidth: "90%", margin: "auto"}}>
         <Navigation />
-        {totalCount && <h4>Total pokemons: {totalCount}</h4>}
-        {status === "pending" ? <p>Loading...</p> : <Grid items={pokemons} />}        
+        {isSuccess && totalCount && <h4>Total pokemons: {totalCount}</h4>}
+        {isLoading ? <p>Loading...</p> : <Grid items={pokemons} />}        
         <br/>
         <div>
-            {previous && <button onClick={() => dispatch(fetchPokemons(previous))}>Previous</button>}
-            {next && <button onClick={() => dispatch(fetchPokemons(next))}>Next</button>}
+            {previous && <button onClick={() => handlePagination(previous)}>Previous</button>}
+            {next && <button onClick={() => handlePagination(next)}>Next</button>}
         </div>
-
     </div>
 }

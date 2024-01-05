@@ -19,4 +19,16 @@ export const apiSlice = createApi({
   })
 });
 
+export const PokemonApi = createApi({
+  reducerPath: "pokemonApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "https://pokeapi.co/api/v2/" }),
+  endpoints: (builder) => ({
+    getPokemons: builder.query({
+      query: (offset) => `pokemon?offset=${offset}&limit=${10}`
+    })
+  })
+});
+
+export const { useGetPokemonsQuery } = PokemonApi;
+
 export const { useFetchTodosQuery, useAddTodoMutation } = apiSlice;
