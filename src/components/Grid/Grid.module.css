@@ -1,0 +1,7 @@
+.gridWrapper {
+    display: flex;
+    justify-content: space-around;
+}
+.gridItem {
+    cursor: pointer;
+}

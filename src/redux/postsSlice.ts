@@ -1,11 +1,6 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// const initialState = [
-//   { id: "1", title: "First Post!", content: "Hello!" },
-//   { id: "2", title: "Second Post", content: "More text" }
-// ];
-
 const initialState: {
   posts: { id: string; title: string; content: string }[];
   status: "idle" | "loading" | "succeeded" | "failed";

@@ -1,20 +1,20 @@
-import { useAppDispatch } from "../redux/hooks";
-import { add } from "../redux/postsSlice";
-import { useFetchTodosQuery } from "../redux/api";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { add, fetchTodos } from "../redux/postsSlice";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useEffect } from "react";
 
 export default function Posts() {
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
-    const {data: posts, isFetching, isSuccess, isError} = useFetchTodosQuery();
-    // const {posts, status, error} = useAppSelector((state) => state.posts);
+    // const {data: posts, isFetching, isSuccess, isError} = useFetchTodosQuery();
+    const {posts, status} = useAppSelector((state) => state.posts);
 
-    // useEffect(() => {
-    //     if(status === "idle") {
-    //         dispatch(fetchTodos())
-    //     }
-    // },[status])
+    useEffect(() => {
+        if(status === "idle") {
+            dispatch(fetchTodos())
+        }
+    },[status])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,9 +24,9 @@ export default function Posts() {
         dispatch(add(postTitle, postContent));
     }
 
-    if(isFetching) return <div>Loading...</div>
+    // if(isFetching) return <div>Loading...</div>
 
-    if(isError) return <div>{isError}</div>
+    // if(isError) return <div>{isError}</div>
 
     return <div>
         <form onSubmit={handleSubmit}>
@@ -51,8 +51,7 @@ export default function Posts() {
         {posts.map((post) => {
             return <div>
                 <h3>#{post.id} {post.title}</h3>
-                <p>{post.body}</p>
-                
+                <p>{post.body}</p>                
             </div>
         })}
     </div>

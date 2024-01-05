@@ -6,11 +6,13 @@ import { ErrorPage } from "./components/error-page";
 import { HomePage } from "./pages/home";
 import { PostPage } from "./pages/post";
 import { PostsPage } from "./pages/posts";
+import PokemonPage from "./pages/pokemon";
 
 const router = createBrowserRouter([
   { path: "/", element: <HomePage />, errorElement: <ErrorPage /> },
   { path: "/posts", element: <PostsPage /> },
-  { path: "/post/:postId", element: <PostPage /> }
+  { path: "/post/:postId", element: <PostPage /> },
+  { path: "pokemon", element: <PokemonPage /> }
 ]);
 
 function App() {
